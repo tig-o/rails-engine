@@ -1,24 +1,23 @@
-# README
+# SECTION ONE: RESTful Endpoints, Minimum Requirements:
+Expose the following RESTful API endpoints for the following:
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Merchants:
+get all merchants
+get one merchant
+get all items for a given merchant ID
 
-Things you may want to cover:
+### Items:
+get all items
+get one item
+create an item
+edit an item
+delete an item
+get the merchant data for a given item ID
 
-* Ruby version
+# SECTION TWO: Non-RESTful Search Endpoints
 
-* System dependencies
+### ONE of following endpoint pairs:
+find one MERCHANT based on search criteria AND find all ITEMS based on search criteria
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### OR:
+find one ITEM based on search criteria AND find all MERCHANTS based on search criteria
