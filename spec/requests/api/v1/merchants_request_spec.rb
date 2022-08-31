@@ -28,10 +28,14 @@ describe 'Merchants API' do
 
     expect(response).to be_successful
 
-    merchants = JSON.parse(response.body, symbolize_names: true)
+    merchant = JSON.parse(response.body, symbolize_names: true)
 
-    expect(merchants[:data].count).to eq(1)
-    expect(merchants[:data].count).to_not eq(7)
+    expect(merchant[:id]).to eq(id)
+    expect(merchant).to have_key(:id)
+    expect(merchant[:id]).to be_an(Integer)
+
+    expect(merchant).to have_key(:name)
+    expect(merchant[:name]).to be_a(String)
+    expect(merchant[:name]).to eq(merchant.values[1])
   end
-
 end
