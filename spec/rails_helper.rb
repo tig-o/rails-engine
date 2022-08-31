@@ -1,5 +1,6 @@
 # Specify coverage needed:
 require 'simplecov'
+SimpleCov.start
 SimpleCov.add_filter ["app/channels", "app/helpers", "app/mailers", "app/jobs"]
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
