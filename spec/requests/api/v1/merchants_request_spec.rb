@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Merchants API' do
+RSpec.describe 'Merchants API' do
   it 'sends a list of merchants' do
     create_list(:merchant, 7)
 
@@ -18,6 +18,9 @@ describe 'Merchants API' do
 
       expect(merchant[:attributes]).to have_key(:name)
       expect(merchant[:attributes][:name]).to be_a(String)
+      
+      expect(merchant[:attributes]).to_not have_key(:created_at)
+      expect(merchant[:attributes]).to_not have_key(:updated_at)
     end
   end
 
@@ -35,8 +38,16 @@ describe 'Merchants API' do
     expect(merchant).to have_key(:id)
     expect(merchant[:id]).to be_an(String)
 
+    expect(merchant[:type]).to eq("merchant")
+
     expect(merchant[:attributes]).to have_key(:name)
     expect(merchant[:attributes][:name]).to be_a(String)
     expect(merchant[:attributes][:name]).to eq(merchant[:attributes].values[0])
+  end
+
+  it 'returns 404 if merchant not found' do
+    get "/api/v1/merchants/42"
+    expect(response.message).to eq("Not Found")
+    expect(response.status).to eq(404)
   end
 end
