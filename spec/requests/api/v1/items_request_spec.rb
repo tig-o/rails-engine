@@ -104,4 +104,38 @@ RSpec.describe 'Items API' do
     expect(Item.count).to eq(0)
     expect{Item.find(item.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
+  
+  it 'can update an existing item' do
+    merchant = create(:merchant)
+    item = create(:item, merchant_id: merchant.id)
+    item_id = item.id
+
+    old_name = item.name
+    old_description = item.description
+    old_unit_price = item.unit_price
+
+    new_params = {
+      name: 'o light',
+      description: 'Travel flashlight on the go',
+      unit_price: 67.99,
+      merchant_id: merchant.id
+      }
+
+    patch "/api/v1/items/#{item_id}", headers: {"CONTENT_TYPE" => "application/json"}, params: JSON.generate(new_params)
+
+    updated_item = Item.find_by(id: item_id)
+
+    expect(response).to be_successful
+    
+    expect(updated_item.name).to eq("o light")
+    expect(updated_item.name).to_not eq(old_name)
+
+    expect(updated_item.description).to eq("Travel flashlight on the go")
+    expect(updated_item.description).to_not eq(old_description)
+
+    expect(updated_item.unit_price).to eq(67.99)
+    expect(updated_item.unit_price).to_not eq(old_unit_price)
+
+    expect(updated_item.merchant_id).to eq(merchant.id)
+  end
 end
