@@ -15,11 +15,20 @@ class Api::V1::ItemsController < ApplicationController
     item = Item.create(item_params)
     render json: ItemSerializer.format_item(item), status: 201
   end
-  
+
+  def update
+    item = Item.find(params[:id])
+    if item.update(item_params)
+      render json: ItemSerializer.format_item(item)
+    else
+      render json: {error: "Not Found"}, status: 404
+    end
+  end
+
   def destroy
     render json: Item.delete(params[:id]), status: 204
   end
-
+  
   private
 
   def item_params
