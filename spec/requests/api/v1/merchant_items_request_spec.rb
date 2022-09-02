@@ -38,4 +38,24 @@ RSpec.describe 'Merchant Items Request API' do
     expect(response.message).to eq("Not Found")
     expect(response.status).to eq(404)
   end
+
+  it 'can get an items merchant' do
+    created_merchant = create(:merchant)
+    item_id = create(:item, merchant_id: created_merchant.id).id
+
+    get "/api/v1/items/#{item_id}/merchant"
+
+    expect(response).to be_successful
+
+    merchant = JSON.parse(response.body, symbolize_names: true)
+
+    expect(merchant[:data][:id]).to eq(created_merchant.id.to_s)
+    expect(merchant[:data]).to have_key(:id)
+    expect(merchant[:data][:id]).to be_an(String)
+
+    expect(merchant[:data][:type]).to eq("merchant")
+
+    expect(merchant[:data][:attributes]).to have_key(:name)
+    expect(merchant[:data][:attributes][:name]).to be_a(String)
+  end
 end
