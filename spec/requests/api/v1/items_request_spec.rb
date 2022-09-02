@@ -72,4 +72,24 @@ RSpec.describe 'Items API' do
     expect(response.message).to eq("Not Found")
     expect(response.status).to eq(404)
   end
+
+  it 'can create a new item' do
+    merchant = create(:merchant)
+    item_params = ({
+      name: 'o light',
+      description: 'Travel flashlight on the go',
+      unit_price: 67.99,
+      merchant_id: merchant.id
+      })
+
+    post "/api/v1/items", headers: {"CONTENT_TYPE" => "application/json"}, params: JSON.generate(item_params)
+
+    created_item = Item.last
+
+    expect(response).to be_successful
+    expect(created_item.name).to eq("o light")
+    expect(created_item.description).to eq("Travel flashlight on the go")
+    expect(created_item.unit_price).to eq(67.99)
+    expect(created_item.merchant_id).to eq(merchant.id)
+  end
 end
