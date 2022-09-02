@@ -4,4 +4,10 @@ RSpec.describe Item, type: :model do
   describe 'relationships' do
     it { should belong_to :merchant }
   end
+
+  describe 'model methods' do
+    it 'can find all items with keyword' do
+
+    end
+  end
 end
