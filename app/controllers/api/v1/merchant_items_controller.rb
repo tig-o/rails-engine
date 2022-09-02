@@ -7,4 +7,9 @@ class Api::V1::MerchantItemsController < ApplicationController
       render json: {error: "Not Found"}, status: 404
     end
   end
+
+  def show
+    item = Item.find(params[:id])
+    render json: MerchantSerializer.format_merchant(item.merchant)
+  end
 end
